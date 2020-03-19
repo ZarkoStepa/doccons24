@@ -1,0 +1,4 @@
+*** Variables ***
+${USER}    skauto
+${EMAIL}    skauto@mailinator.com
+${USERPW}    Shubham##99

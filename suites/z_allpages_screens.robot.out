@@ -1,0 +1,73 @@
+*** Settings ***
+Documentation  Capture all pages 
+Library  SeleniumLibrary
+Library     XvfbRobot
+# https://www.blazemeter.com/blog/robot-framework-the-ultimate-guide-to-running-your-tests
+Suite Setup    Open Testbrowser 
+Suite Teardown    Close All Browsers
+# documentation http://robotframework.org/Selenium2Library/Selenium2Library.html#Input%20Text
+# keywords and parameters must be seperated by 2 spaces "  "
+Resource    setup.txt
+
+*** Variables ***
+${TMP_PATH}    /tmp
+# 20190104 AUTHURL and BASEURL shall be in newuser.txt 
+
+
+*** Keywords ***
+Open Testbrowser 
+	Start Virtual Display	1920	1080
+	Open Chrome Browser
+
+# Works on https://medium.com/@ypasmk/robot-framework-with-docker-in-less-than-10-minutes-7b86df769c22
+*** Test Cases ***
+Login with existing User
+	[Tags]  capture  sumo
+	GoTo	${BASEURL}
+	Click Link    ${BASEURL}/lang/de
+	Input Text  name:email  ${EMAIL}
+	Input Text  name:password  ${USERPW}
+	Capture Page Screenshot  Screenshot-loginform-{index}.png
+	Submit Form
+	Capture Page Screenshot  Screenshot-afterlogin-{index}.png
+
+View appointments
+	[Tags]  capture  sumo
+	Click Element    id:m_aside_left_offcanvas_toggle
+	Click Link    /appointments
+	Wait Until Page Contains  Termine
+	Capture Page Screenshot  Screenshot-appointments-{index}.png
+
+View doctors
+	[Tags]  capture  sumo
+	Click Element    id:m_aside_left_offcanvas_toggle
+	Click Link    /doctors
+	Wait Until Page Contains  Ärzte
+	Capture Page Screenshot  Screenshot-doctors-{index}.png
+
+View profile
+	[Tags]  capture  sumo
+	Click Element    id:m_aside_left_offcanvas_toggle
+	Click Link    /profile
+	Wait Until Page Contains  Profil
+	Capture Page Screenshot  Screenshot-profile-{index}.png
+
+View wallet
+	[Tags]  capture  sumo
+	Click Element    id:m_aside_left_offcanvas_toggle
+	Click Link    /wallet
+	Wait Until Page Contains  Wallet
+	Capture Page Screenshot  Screenshot-wallet-{index}.png
+	Logout dc24
+
+*** Keywords ***
+Open Chrome Browser
+    ${options}  Evaluate  sys.modules['selenium.webdriver'].ChromeOptions()  sys, selenium.webdriver
+    Call Method  ${options}  add_argument  --no-sandbox
+    ${prefs}    Create Dictionary    download.default_directory=${TMP_PATH}
+    Call Method    ${options}    add_experimental_option    prefs    ${prefs}
+    Create Webdriver    Chrome    chrome_options=${options}
+
+Logout dc24
+	Click Element    id:m_aside_left_offcanvas_toggle
+	Click Link    /logout

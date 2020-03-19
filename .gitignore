@@ -1,0 +1,12 @@
+# General
+.DS_Store
+*.png
+*.html
+*.xml
+*.log
+_setup.txt
+user.conf
+
+# spare out the result folder
+results
+suites/newuser.txt

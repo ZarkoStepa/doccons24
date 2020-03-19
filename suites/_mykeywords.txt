@@ -1,0 +1,83 @@
+*** Keywords ***
+LoginKW
+    Go To    ${TESTURL}
+    Clear Element Text    name:email
+    Input Text    name:email    ${EMAIL}
+    Clear Element Text    name:password
+    Input Password    name:password    ${USERPW}
+    Click Element    xpath://label[@for='checkbox1']
+    #Press Keys    xpath://button[@type='submit']    ENTER
+    #Click Button    xpath://button[@type='submit']
+    Submit Form
+    Log    The patient has successfully logged in
+
+LoginNewUserKW
+    Open Browser    ${TESTURL}    ${BROWSER}
+    Maximize Browser Window
+    Clear Element Text    name:email
+    Input Text    name:email    ${NEWEMAIL}
+    Clear Element Text    name:password
+    Input Password    name:password    ${NEWUSERPW}
+    Click Element    xpath://label[@for='checkbox1']
+    #Press Keys    xpath://button[@type='submit']    ENTER
+    #Click Button    xpath://button[@type='submit']
+    Submit Form
+    Log    The patient has successfully logged in
+
+LoginDocKW
+    Open Browser    ${TESTURL}    ${BROWSER}
+    Maximize Browser Window
+    Set Browser Implicit Wait    2
+    Clear Element Text    name:email
+    Input Text    name:email    ${DOCEMAIL}
+    Clear Element Text    name:password
+    Input Password    name:password    ${DOCPW}
+    Click Element    xpath://label[@for='checkbox1']
+    #Press Keys    xpath://button[@type='submit']    ENTER
+    #Click Element    xpath://button[@type='submit']
+    Submit Form
+    Log    The doctor has successfully logged in
+
+LoginAdminKW
+    Open Browser    ${TESTURL}    ${BROWSER}
+    Maximize Browser Window
+    Set Browser Implicit Wait    2
+    Clear Element Text    name:email
+    Input Text    name:email    ${ADMIN}
+    Clear Element Text    name:password
+    Input Password    name:password    ${ADMINPW}
+    Click Element    xpath://label[@for='checkbox1']
+    Submit Form
+    Log    The admin has successfully logged in
+
+LogoutKW
+    Click Link    /logout
+    Log    Succesful Logout
+
+Logout dc24
+    Click Element    id:m_aside_left_offcanvas_toggle
+    Click Link    /logout
+
+Login de
+    GoTo    ${AUTHURL}
+    Click Link    ${BASEURL}/lang/de
+    Input Text    name:email    ${EMAIL}
+    Input Text    name:password    ${USERPW}
+    # Button to register needs an id
+    Submit Form
+
+Login en
+    GoTo    ${AUTHURL}
+    Click Link    ${BASEURL}/lang/en
+    Input Text    name:email    ${EMAIL}
+    Input Text    name:password    ${USERPW}
+    # Button to register needs an id
+    Submit Form
+
+Login ar
+    GoTo    ${AUTHURL}
+    Click Link    ${BASEURL}/lang/ar
+    Input Text    name:email    ${EMAIL}
+    Input Text    name:password    ${USERPW}
+    # Button to register needs an id
+    Submit Form
