@@ -15,9 +15,9 @@ ${TMP_PATH}       /tmp
 *** Test Cases ***
 Login with existing User
     [Tags]    appointment
-    GoTo    ${BASEURL}
-    Click Link    ${BASEURL}/lang/de
-    Input Text    name:email    ${EMAIL}
+    GoTo    ${TESTURL}
+    Click Link    ${TESTURL}/lang/de
+    Input Text    name:email    ${DOCEMAIL}
     Input Text    name:password    ${USERPW}
     #Capture Page Screenshot    Screenshot-loginform-{index}.png
     Submit Form

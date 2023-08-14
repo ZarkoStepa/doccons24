@@ -20,12 +20,7 @@ Login en
 
 My appointments
     [Tags]    patient.navigate.links
-    #Wait Until Element Is Visible    xpath://div[@class='toast-message']
-    Capture Page Screenshot    before-toast-message-{index}.png
-    #Click Element    xpath://div[@class='toast-message']
-    Sleep    1
-    Capture Page Screenshot    after-toast-message-{index}.png
-    Sleep    1
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Wait Until Element Is Visible    xpath://span[contains(text(),'My appointments')]
     Element Text Should Be    xpath://span[contains(text(),'My appointments')]    My appointments
@@ -44,6 +39,7 @@ Book an apointment
 
 Profile
     [Tags]    patient.navigate.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     #Element Text Should Be    xpath://span[contains(text(),'Profile')]    Profile
     Click Link    /profile
@@ -53,7 +49,7 @@ Profile
     Patient Profile Info page
     Capture Page Screenshot    profile-info-top-{index}.png
     Scroll Element Into View    xpath://a[contains(text(),'Account info')]
-    Sleep    3
+    Wait Until Element Is Visible    xpath://a[contains(text(),'Account info')]
     Click Element    xpath://a[contains(text(),'Account info')]
     Patient Account Info page
     Capture Page Screenshot    account-info-page-{index}.png
@@ -75,6 +71,7 @@ Profile
 
 Wallet
     [Tags]    patient.navigate.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Element Text Should Be    xpath://span[contains(text(),'Wallet')]    Wallet
     Click Link    /wallet
@@ -82,17 +79,9 @@ Wallet
     Capture Page Screenshot    wallet-page-{index}.png
     Patient Wallet page
 
-Recommendation/Prescription
-    [Tags]    patient.navigate.links
-    Click Element    id:m_aside_left_offcanvas_toggle
-    Element Text Should Be    xpath://span[contains(text(),'Recommendation/Prescription')]    Recommendation/Prescription
-    Click Element    xpath://span[contains(text(),'Recommendation/Prescription')]
-    #Wait Until Element Is Visible    id:mytable_wrapper
-    Patient Recommendation/Prescription page
-    Capture Page Screenshot    recomendation-prescription-{index}.png
-
 Reports
     [Tags]    patient.navigate.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Link    id:report_a
     Wait Until Element Is Visible    xpath://span[contains(text(),'Payment report')]
@@ -107,10 +96,21 @@ Reports
     Capture Page Screenshot    loginHist_wrapper-{index}.png
     Patient Login History page
 
+Recommendation/Prescription
+    [Tags]    patient.navigate.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
+    Click Element    id:m_aside_left_offcanvas_toggle
+    Element Text Should Be    xpath://span[contains(text(),'Recommendation/Prescription')]    Recommendation/Prescription
+    Click Element    xpath://span[contains(text(),'Recommendation/Prescription')]
+    #Wait Until Element Is Visible    id:mytable_wrapper
+    Patient Recommendation/Prescription page
+    Capture Page Screenshot    recomendation-prescription-{index}.png
+
 Language
     [Tags]    patient.navigate.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
-    #Click Link    id:languages_a
+    Click Link    id:languages_a
     Wait Until Element Is Visible    xpath://span[contains(text(),'English')]
     Wait Until Element Is Visible    xpath://span[contains(text(),'German')]
     Wait Until Element Is Visible    xpath://span[contains(text(),'Arabic')]
@@ -128,6 +128,7 @@ Help
 
 System check
     [Tags]    patient.navigate.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Element Text Should Be    xpath://span[contains(text(),'System Check')]    System Check
     Click Element    xpath://span[contains(text(),'System Check')]
@@ -140,14 +141,3 @@ Logout
     LogoutKW
 
 *** Keywords ***
-Open Testbrowser
-    ${system}=    Evaluate    platform.system()    platform
-    Run Keyword If    '${system}' == 'Linux'    Start Virtual Display    1920    1080
-    Open Chrome Browser
-
-Open Chrome Browser
-    ${options}    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    Call Method    ${options}    add_argument    --no-sandbox
-    ${prefs}    Create Dictionary    download.default_directory=${TMP_PATH}
-    Call Method    ${options}    add_experimental_option    prefs    ${prefs}
-    Create Webdriver    Chrome    chrome_options=${options}

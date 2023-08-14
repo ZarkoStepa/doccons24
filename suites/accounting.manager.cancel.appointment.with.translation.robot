@@ -13,9 +13,9 @@ Library           XvfbRobot
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-Manager create appointment with translation
+Manager create an appointment with translation
     [Tags]    accounting
-    [Setup]    All wallets
+    [Setup]
     LoginManagerKW
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'Book an appointment')]
@@ -54,16 +54,17 @@ Manager create appointment with translation
     Capture Page Screenshot    paid-appointment-{index}.png
     Sleep    2
     LogoutKW
-    manager wallet
+    Manager Wallet
 
 Manager cancel appointment
     [Tags]    accounting
-    [Setup]    All wallets
+    [Setup]
     LoginManagerKW
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'All appointments')]
     Capture Page Screenshot    go-to-my-appointment-{index}.png
-    Click Element    xpath://table[1]/tbody[1]/tr[1]/td[2]/a[1]
+    Wait Until Element Is Visible    xpath://tr[1]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
     Capture Page Screenshot    in-an-appointment-{index}.png
     ${url} =    Get Location
     Log to console    ${url}
@@ -74,4 +75,4 @@ Manager cancel appointment
     Capture Page Screenshot    allert-message-{index}.png
     Sleep    1
     LogoutKW
-    [Teardown]    All wallets
+    [Teardown]

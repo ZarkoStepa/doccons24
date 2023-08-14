@@ -18,7 +18,7 @@ Resource          _keywords.txt
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-Admin create doctor - success
+Admin creates doctor - success
     [Tags]    doctor.register
     LoginAdminKW
     Click Element    xpath://a[@class='btn btn-success']
@@ -51,7 +51,6 @@ Admin create doctor - success
 Admin doctor activation
     [Tags]    doctor.register
     Click Element    xpath://a[contains(text(),'Admin')]
-    Sleep    1
     Capture Page Screenshot    user-page-admin-{index}.png
     Admin Activation Edit User page
     Scroll Element Into View    xpath://div[@id='m_user_profile_tab_9']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
@@ -61,7 +60,6 @@ Admin doctor activation
     ${alert-success} =    Get Text    class:alert-success
     Log To Console    ${alert-success}
     Capture Page Screenshot    admin-doctor-activation-{index}.png
-    Sleep    2
     LogoutKW
 
 Doctor login test - failure
@@ -115,7 +113,8 @@ Doctor access my appointment without login - failure
     Capture Page Screenshot    doctor-after-logout-{index}.png
     [Teardown]
 
-Delete dooctor account
+Delete doctor account
+    [Tags]    doctor.register
     LoginAdminKW
     Sleep    1
     Input Text    xpath://label[contains(text(),'Search:')]//input    ${doctor_random_email}
@@ -133,7 +132,7 @@ Delete dooctor account
     Input Text    xpath://label[contains(text(),'Search:')]//input    ${doctor_random_email}
     Sleep    1
     Capture Page Screenshot    search-doctor-{index}.png
-    Click Element    xpath:/html[1]/body[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[2]/div[1]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[6]/a[3]
+    Click Element    xpath://table[1]/tbody[1]/tr[1]/td[6]/a[3]
     Sleep    1
     Capture Page Screenshot    deactivate-user-{index}.png
     Click Element    xpath://button[@id='proba']

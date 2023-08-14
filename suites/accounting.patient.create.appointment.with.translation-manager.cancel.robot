@@ -11,9 +11,9 @@ Resource          _mysetup.txt
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-Patient create appointment with translation
-    [Tags]    accounting
-    [Setup]    All wallets
+Patient create an appointment with translation
+    [Tags]
+    [Setup]
     LoginKW
     Click Button    id:rq_btn3
     Capture Page Screenshot    before-input-appointment-{index}.png
@@ -24,7 +24,6 @@ Patient create appointment with translation
     Radio Button Should Be Set To    fk_appoint_type    2
     Capture Page Screenshot    select-translation-{index}.png
     Click Element    xpath://div[@class='col-8 col-form-label']//span
-    #Click Element    xpath://input[@id='No']
     Capture Page Screenshot    before-first-appointment-{index}.png
     Click Button    id:rq_btn
     ${url} =    Get Location
@@ -39,13 +38,14 @@ Patient create appointment with translation
     LogoutKW
 
 Manager cancel appointment
-    [Tags]    accounting
-    [Setup]    All wallets
+    [Tags]
+    [Setup]
     LoginManagerKW
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'All appointments')]
     Capture Page Screenshot    go-to-my-appointment-{index}.png
-    Click Element    xpath://table[1]/tbody[1]/tr[1]/td[2]/a[1]
+    Wait Until Element Is Visible    xpath://tr[1]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
     Capture Page Screenshot    in-an-appointment-{index}.png
     ${url} =    Get Location
     Log to console    ${url}
@@ -56,4 +56,30 @@ Manager cancel appointment
     Capture Page Screenshot    allert-message-{index}.png
     Sleep    1
     LogoutKW
-    [Teardown]    All wallets
+    [Teardown]
+
+Patient cancel appointment
+    LoginKW
+    Click Element    id:m_aside_left_offcanvas_toggle
+    Click Element    xpath://span[contains(text(),'My appointments')]
+    Capture Page Screenshot    go-to-my-appointment-{index}.png
+    Wait Until Element Is Visible    xpath://tr[1]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
+    Capture Page Screenshot    in-an-appointment-{index}.png
+    ${url} =    Get Location
+    Log to console    ${url}
+    #${status-of-appointment} =    Get Text    class:m-portlet__body
+    #Log To Console    ${status-of-appointment} =
+    #${status-of-appointment} =    Get Text    class:col-md-3
+    #Log To Console    ${status-of-appointment} =
+    Capture Page Screenshot    before-canceling-appointment-{index}.png
+    Click Element    xpath://a[@class='btn btn-danger']
+    Handle Alert
+    ${alert-success} =    Get Text    class:alert-success
+    Log To Console    ${alert-success}
+    Capture Page Screenshot    after-canceling-appointment-{index}.png
+    Sleep    2
+    Click Element    id:m_aside_left_offcanvas_toggle
+    Click Element    xpath://span[contains(text(),'Wallet')]
+    Capture Page Screenshot    wallet-balance-{index}.png
+    LogoutKW

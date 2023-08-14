@@ -28,13 +28,9 @@ Password too short: short8
     Input Text    name:password    short8
     Input Text    name:password_confirmation    short8
     Select Checkbox    id:check_agreement
-    # Button to register needs an id
     Submit Form
     Wait Until Page Contains    at least 8 characters.
-    #Capture Page Screenshot    Screenshot-password-short-{index}.png
-    # @todo fail-test user is already registered
-    # @todo fail-test password = firstname
-    #Logout dc24
+    Capture Page Screenshot    Screenshot-password-short-{index}.png
 
 Password no number: noNumber
     [Tags]    password
@@ -46,7 +42,7 @@ Password no number: noNumber
     Select Checkbox    id:check_agreement
     # Button to register needs an id
     Submit Form
-    #Capture Page Screenshot    Screenshot-password-noNumber-{index}.png
+    Capture Page Screenshot    Screenshot-password-noNumber-{index}.png
     Wait Until Page Contains    password format is invalid
 
 Password no capital: nocapital10
@@ -59,7 +55,7 @@ Password no capital: nocapital10
     Select Checkbox    id:check_agreement
     # Button to register needs an id
     Submit Form
-    #Capture Page Screenshot    Screenshot-password-nocapital10-{index}.png
+    Capture Page Screenshot    Screenshot-password-nocapital10-{index}.png
     Wait Until Page Contains    password format is invalid
 
 Password correct: Correct8
@@ -72,20 +68,7 @@ Password correct: Correct8
     Select Checkbox    id:check_agreement
     # Button to register needs an id
     Submit Form
-    #Capture Page Screenshot    Screenshot-password-Correct8-{index}.png
+    Capture Page Screenshot    Screenshot-password-Correct8-{index}.png
     Wait Until Page Contains    Correct8
-    Logout dc24
-
-*** Keywords ***
-Open Testbrowser
-    ${system}=    Evaluate    platform.system()    platform
-    Run Keyword If    '${system}' == 'Linux'    Start Virtual Display    1920    1080
-    Open Chrome Browser
-    # Passwörter sollten mindestens 8 Zeichen lang sein, mindestens 1 Großbuchstabe und mindestens 1 Ziffer.
-
-Open Chrome Browser
-    ${options}    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    Call Method    ${options}    add_argument    --no-sandbox
-    ${prefs}    Create Dictionary    download.default_directory=${TMP_PATH}
-    Call Method    ${options}    add_experimental_option    prefs    ${prefs}
-    Create Webdriver    Chrome    chrome_options=${options}
+    LogoutKW
+    [Teardown]    Delete user

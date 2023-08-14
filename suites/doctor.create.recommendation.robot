@@ -17,16 +17,16 @@ Resource          _mysetup.txt
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-Doctor add reccomendation/prescription
+Doctor add recomendation/prescription
     [Tags]    doctor.create.recommendation
     LoginDocKW
     Click Element    id:m_aside_left_offcanvas_toggle
-    Sleep    1
+    Wait Until Element Is Visible    xpath://a[@class='m-menu__link m-menu__toggle']//span[@class='m-menu__link-text'][contains(text(),'Write...')]
     Click Element    xpath://a[@class='m-menu__link m-menu__toggle']//span[@class='m-menu__link-text'][contains(text(),'Write...')]
     Click Element    xpath://span[@class='m-menu__link-text'][contains(text(),'Recommendation/Prescription')]
-    Doctor recommendation/precription page
+    Doctor recommendation/prescription page
     Click Element    xpath://a[@id='addrecommendation']
-    Sleep    1
+    Wait Until Element Is Visible    xpath://div[@id='newModal']//div[@class='modal-content']
     Add new recommendation prescription modal
     Click Element    id:write_type
     Click Element    xpath://select[@id='write_type']//option[contains(text(),'Recommendation')]
@@ -39,37 +39,34 @@ Doctor add reccomendation/prescription
 
 Approve recommendations
     [Tags]    doctor.create.recommendation
-    Sleep    1
+    Sleep    2
+    Wait Until Element Is Visible    xpath://span[contains(text(),'Approve')]
     Click Element    xpath://span[contains(text(),'Approve')]
     Capture Page Screenshot    apporve-reccomendation-{index}.png
-    Sleep    1
     LogoutKW
 
-Patient see recommendation - sucess
+Patient see recommendation - success
     [Tags]    doctor.create.recommendation
     LoginKW
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'Recommendation/Prescription')]
     Patient Recommendation/Prescription page
-    # to do view recomm.
-    Sleep    5
     LogoutKW
 
 Delete recommendation - success
     [Tags]    doctor.create.recommendation
     LoginDocKW
     Click Element    id:m_aside_left_offcanvas_toggle
-    Sleep    1
+    Wait Until Element Is Visible    xpath://a[@class='m-menu__link m-menu__toggle']//span[@class='m-menu__link-text'][contains(text(),'Write...')]
     Click Element    xpath://a[@class='m-menu__link m-menu__toggle']//span[@class='m-menu__link-text'][contains(text(),'Write...')]
     Click Element    xpath://span[@class='m-menu__link-text'][contains(text(),'Recommendation/Prescription')]
-    Sleep    1
+    Wait Until Element Is Visible    xpath://button[@class='delete-modal btn btn-danger']
     Click Element    xpath://button[@class='delete-modal btn btn-danger']
-    Sleep    1
     Recommendation delete modal
-    Sleep    1
+    Wait Until Element Is Visible    xpath://span[contains(text(),'Delete Recommendation/Prescription')]
     Click Element    xpath://span[contains(text(),'Delete Recommendation/Prescription')]
     Capture Page Screenshot    when-delete-recommendation-{index}.png
-    Sleep    3
+    Wait Until Element Is Visible    class:alert-success
     ${alert-success} =    Get Text    class:alert-success
     Log To Console    ${alert-success}
     LogoutKW

@@ -21,19 +21,20 @@ Login
 
 Go To Wallet
     [Tags]    account.manager.deposit.amount
-    Click Element    id:m_aside_left_offcanvas_toggle
+    Wait Until Element Is Visible    id=m_aside_left_offcanvas_toggle
+    Click Element    id=m_aside_left_offcanvas_toggle
     Capture Page Screenshot    open-sidebar-menu-{index}.png
-    Click Element    xpath://span[contains(text(),'Wallet')]
+    Click Element    xpath=//span[contains(text(),'Wallet')]
     Capture Page Screenshot    click-on-wallet-link-text-{index}.png
-    Sleep    5
+    #Sleep    5
     Patient Wallet page
     Capture Page Screenshot    account-manager-wallet-page-{index}.png
 
 Deposit Amount
     [Tags]    account.manager.deposit.amount
-    Input Text    id:depositAmount    ${AMOUNT}
+    Input Text    id=depositAmount    ${AMOUNT}
     Capture Page Screenshot    input-amount-{index}.png
-    Click Element    id:paymentButton
+    Click Element    id=paymentButton
     Capture Page Screenshot    after-click-paypal-button-{index}.png
     Paypal add amount
     Capture Page Screenshot    after-deposit-from-paypal-{index}.png

@@ -16,7 +16,7 @@ Login
     [Setup]    Setup account manager Doctor
     LoginAdminKW
 
-Go to Doctor profile
+Go to Doctor profile to add a manager
     [Tags]    admin.account.manager.doctor
     All Users page
     Input Text    xpath://label[contains(text(),'Search:')]//input    ${DOCEMAIL}
@@ -30,7 +30,7 @@ Go to Doctor profile
     Capture Page Screenshot    click-on-admin-linktext-{index}.png
     Click Element    xpath://select[@id='account_manager']
     Capture Page Screenshot    click-to-open-dropdown-list-{index}.png
-    Click Element    xpath://option[@id='12']
+    Click Element    xpath://option[@id='5']
     Capture Page Screenshot    select-manager-from-dropdown-{index}.png
     Click Element    xpath://div[@id='m_user_profile_tab_9']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
     ${alert-success} =    Get Text    class:alert-success

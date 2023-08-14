@@ -1,60 +1,76 @@
 *** Variables ***
 # env:test
-${BASEURL}        https://dev1.doccons24.de
-${TESTURL}        https://test.doccons24.de
-${BROWSER}        Chrome
-${ADMIN}          testadmin@doccons24.com
-${ADMINPW}        C#twalk99
-${ADMINNAME}      adminfirstname
-${ADMINLASTNAME}    adminlastname
-${USER}           skauto
-${USEREMAIL}      skauto@mailinator.com
-${USERPW}         Shubham##99
-${DOCUSER}        skauto1
-${DOCEMAIL}       skauto1@mailinator.com
-${DOCPW}          Shubham##99
-${MANUSER}        skauto2
-${MANEMAIL}       skauto2@mailinator.com
-${PAYPALUSER}     irenafemic@hotmail.com
-${PAYPALPW}       1111111111
-${email}          @mailinator.com
-${CREDITCARD}     5555 5555 5555 4444
-${EXPIRED}        09/2021
-${CVC}            174
-${PHONE}          223453455
-${AMOUNT}         100
-${withdraw1}      10
-${withdraw2}      10
-${withdraw3}      10
-${NEWUSER}        Peter
-${NEWLASTNAME}    Jürgen
-${NEWUSERPW}      Shubham##88
-${ADRESS}         Street 30
-${CITY}           Novi Beograd
-${PROVINCE}       Vojvodina
-${COUNTRY}        Srbija
-${ZIP}            11000
-${NEWDOCUSER}     Michaela
-${NEWDOCLASTNAME}    Müller
-${NEWDOCPW}       Shubham##88
-${EDUCATION}      Medical School
-${REQUIREDFIELDS}    This field is required.
-${INPUTRATE}      100
-${INPUTRATE2}     50
-${MANAGERNAME}    Alexandra
-${MANAGERLASTNAME}    Smith
-${MANAGERPW}      Shubham##99
-${CLINICNAME}     Institute of Oncology
-${ABOUTCLINIC}    The Oncology Institute is committed to providing superior, compassionate and state-of-the-art medical care.
-${name_cert}      Driver
-${cert_decription}    Driver
-${trasnaltionfee}    50
-${email_server}    https://www.mailinator.com/v3/#/#inboxpane
-${arabic_fee}     50
-${BOOK_KEEPER_NAME}    Thomas
-${BOOK_KEEPER_LASTNAME}    Longacre
-${subject_1}      First Session
-${subject_2}      Follow Up
-${subject_3}      Advice regarding operation
-${appointment_type_1}    In Person
-${appointment_type_2}    Video session
+${BASEURL}              https://dev1.doccons24.de
+#${TESTURL}             https://demo.doccons24.com
+${TESTURL}              https://test.doccons24.de
+${BROWSER}              Chrome
+#users
+${ADMIN}                testadmin@doccons24.com
+${ADMINPW}              C#twalk99
+${ADMINNAME}            adminfirstname
+${ADMINLASTNAME}          adminlastname
+${USER}                 skauto
+${USEREMAIL}            skauto@mailinator.com
+${USERPW}               Shubham##99
+${DOCUSER}              skauto1
+${DOCEMAIL}             skauto1@mailinator.com
+${DOCPW}                Shubham##99
+${MANUSER}              skauto2
+${MANEMAIL}             skauto2@mailinator.com
+${PAYPALUSER}           zarko.paypal2020@gmail.com
+${PAYPALPW}             Tester##99
+${email}                @mailinator.com
+#personal info
+${PHONE}                223453455
+${AMOUNT}               500
+${NEWUSER}              Peter
+${NEWLASTNAME}          Jürgen
+#${NEWUSER}             patient
+#${NEWLASTNAME}          patient
+${NEWUSERPW}            Shubham##88
+${ADRESS}               Street 30
+${CITY}                 Novi Beograd
+${PROVINCE}             Vojvodina
+${COUNTRY}              Srbija
+${ZIP}                  11000
+#${NEWDOCUSER}          doctor
+#${NEWDOCLASTNAME}          doctor
+${NEWDOCUSER}           Michaela
+${NEWDOCLASTNAME}          Müller
+${NEWDOCPW}             Shubham##88
+${EDUCATION}            Medical School
+${MANAGERNAME}          Alexandra
+${MANAGERLASTNAME}          Smith
+${MANAGERPW}            Shubham##99
+${CLINICNAME}           Institute of Oncology
+${REQUIREDFIELDS}          This field is required.
+${INPUTRATE}            100
+${INPUTRATE2}           50
+${withdraw1}            10
+${withdraw2}            10
+${withdraw3}            10
+${ABOUTCLINIC}          The Oncology Institute is committed to providing superior, compassionate and state-of-the-art medical care.
+${name_cert}            Dentist
+${cert_decription}          Dentist
+${trasnaltionfee}          56
+${email_server}          https://www.mailinator.com/v3/#/#inboxpane
+${arabic_fee}           56
+#${arabic_fee}          50
+${BOOK_KEEPER_NAME}          Thomas
+${BOOK_KEEPER_LASTNAME}          Longacre
+#assertation
+${subject_1}            First Session
+${subject_2}            Follow Up
+${subject_3}            Advice regarding operation
+${appointment_type_1}          In Person
+${appointment_type_2}          Video session
+#credit cards
+${cardExpiry}           1123
+${VISA}                 4242 4242 4242 4242
+${VISA_DEBIT}           4000 0566 5566 5556
+${MASTERCARD}           5555 5555 5555 4444
+${MASTERCARD_2S}          2223 0031 2200 3222
+${MASTERCARD_DEBIT}          5200 8282 8282 8210
+${MASTERCARD_PREPAID}          5105 1051 0510 5100
+${AMERICAN_EXPRESS_1}          3782 8224 6310 005
+${AMERICAN_EXPRESS_2}          3714 4963 5398 431

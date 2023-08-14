@@ -40,12 +40,12 @@ doctor registration - success
     Set Suite Variable    ${doctor_radnom_name}
     Input Text    name:first_name    ${doctor_radnom_name}
     Capture Page Screenshot    register-new-doctor-firstname-{index}.png
-    ${doctor_radnom_last_name} =    Generate Random String    7    [UPPER]
+    ${doctor_radnom_last_name} =    Generate Random String    6    [UPPER]
     ${doctor_radnom_last_name} =    Set Variable    ${doctor_radnom_last_name}
     Set Suite Variable    ${doctor_radnom_last_name}
     Input Text    name:last_name    ${doctor_radnom_last_name}
     Capture Page Screenshot    register-new-doctor-lastname-{index}.png
-    ${doctor_radnom_email} =    Generate Random String    5    [NUMBERS]
+    ${doctor_radnom_email} =    Generate Random String    4    [NUMBERS]
     ${doctor_radnom_email}=    Set Variable    doctor-${doctor_radnom_email}-email-${email}
     Set Suite Variable    ${doctor_radnom_email}
     Input Text    name:email    ${doctor_radnom_email}
@@ -59,31 +59,36 @@ doctor registration - success
     Submit Form
     Capture Page Screenshot    register-new-doctor-signin-{index}.png
     LogoutKW
-    Capture Page Screenshot    register-new-doctor-logout-{index}.png
 
 doctor activation
     [Tags]    doctor.register
     LoginAdminKW
     Capture Page Screenshot    log-as-admin-{index}.png
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'Not confirmed')]
     Click Element    xpath://label[contains(text(),'Search:')]//input
     Input Text    xpath://label[contains(text(),'Search:')]//input    ${doctor_radnom_email}
-    Sleep    2
+    Capture Page Screenshot    input-in-searchbar-doctor-random-email-(index).png
+    Sleep    3
+    Wait Until Element Is Visible    xpath://tr[1]//td[1]
+    Element Text Should Be    xpath://tr[1]//td[1]    ${doctor_radnom_name}
+    Wait Until Element Is Visible    xpath://tr[1]//td[2]
+    Element Text Should Be    xpath://tr[1]//td[2]    ${doctor_radnom_last_name}
+    Wait Until Element Is Visible    xpath://tr[1]//td[4]
+    Element Text Should Be    xpath://tr[1]//td[4]    ${doctor_radnom_email}
     Capture Page Screenshot    search-doctor-{index}.png
     Wait Until Element Contains    xpath://th[contains(text(),'Actions')]    Actions
     Click Element    xpath://a[@class='btn btn-success m-btn m-btn--icon m-btn--icon-only']
     Capture Page Screenshot    admin-actions-{index}.png
+    Sleep    1
     Click Element    xpath://a[contains(text(),'Admin')]
     Admin Activation Edit User page
-    Sleep    1
     Capture Page Screenshot    before-activate-{index}.png
     Click Element    xpath://div[7]/form/div/div/div/div/label[1]    #activate
     Sleep    1
     Capture Page Screenshot    after-clicking-activate-{index}.png
-    #Click Element    //div[@id='m_user_profile_tab_9']//div[@class='m-radio-inline']//label[1]
     Click Button    //div[@id='m_user_profile_tab_9']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
-    Sleep    1
     ${alert-success} =    Get Text    class:alert-success
     Log To Console    ${alert-success}
     Capture Page Screenshot    admin-configuration-updated-successfully-{index}.png
@@ -91,7 +96,6 @@ doctor activation
     Scroll Element Into View    xpath://div[@id='m_user_profile_tab_9']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
     Capture Page Screenshot    after-admin-configuration-updated-successfully-{index}.png
     LogoutKW
-    Capture Page Screenshot    logout-admin-{index}.png
 
 doctor login test - failure
     [Tags]    doctor.register
@@ -105,8 +109,8 @@ doctor login test - failure
     Click Element    name:password
     Capture Page Screenshot    random-doctor-password-{index}.png
     Submit Form
-    Element Should Contain    xpath://li[contains(text(),'These credentials do not match our records.')]    These credentials do not match our records.
     Wait Until Element Contains    xpath://li[contains(text(),'These credentials do not match our records.')]    These credentials do not match our records.
+    Element Should Contain    xpath://li[contains(text(),'These credentials do not match our records.')]    These credentials do not match our records.
     Capture Page Screenshot    login-failure-{index}.png
 
 doctor login test - success
@@ -125,15 +129,18 @@ doctor login test - success
     Submit Form
     Log    Patient has successfully login
     Capture Page Screenshot    after-login-success-{index}.png
+    Sleep    1
 
 doctor logout - success
     [Documentation]    doctor logout - success
     [Tags]    doctor.register
     Capture Page Screenshot    before-offcanvas-toggle-{index}.png
     Click Element    id:m_aside_left_offcanvas_toggle
+    Sleep    1
     Wait Until Element Is Visible    xpath://span[contains(text(),'Logout')]
     Capture Page Screenshot    before-logout-{index}.png
     Click Link    /logout
+    Sleep    1
     Capture Page Screenshot    user-logout-{index}.png
     Log    Patient has successfully logged out
 
@@ -149,13 +156,56 @@ doctor access my appointment
     Capture Page Screenshot    after-submit-{index}.png
     Click Element    id:m_aside_left_offcanvas_toggle
     Capture Page Screenshot    offcanvas-toggle-{index}.png
+    Wait Until Element Is Visible    xpath://span[contains(text(),'My appointments')]
     Click Element    xpath://span[contains(text(),'My appointments')]
-    #Wait Until Element Is Visible    xpath://div[@class='alert alert-danger']
+    Wait Until Element Is Visible    xpath://h3[@class='m-subheader__title m-pageheading']
+    Element Text Should Be    xpath://h3[@class='m-subheader__title m-pageheading']    Appointments
+    Wait Until Element Is Visible    xpath://div[@class='alert alert-danger']
+    ${alert-danger} =    Get Text    class:alert-danger
+    Log To Console    ${alert-danger}
     Capture Page Screenshot    no-any-record-found-{index}.png
-    #Capture Page Screenshot    doctor-docAppointment_wrapper-{index}.png
     LogoutKW
-    Capture Page Screenshot    doctor-after-logout-{index}.png
     [Teardown]
+
+inactive and delete doctor
+    [Tags]    doctor.register
+    LoginAdminKW
+    Wait Until Element Is Visible    xpath://label[contains(text(),'Search:')]
+    Wait Until Element Is Visible    xpath://label[contains(text(),'Search:')]//input
+    Input Text    xpath://label[contains(text(),'Search:')]//input    ${doctor_radnom_email}
+    Sleep    3
+    Capture Page Screenshot    before-delete-doctor-user-{index}.png
+    Wait Until Element Is Visible    xpath://tr[1]//td[4]
+    Element Text Should Be    xpath://tr[1]//td[4]    ${doctor_radnom_name}
+    Wait Until Element Is Visible    xpath://tr[1]//td[5]
+    Element Text Should Be    xpath://tr[1]//td[5]    ${doctor_radnom_last_name}
+    Click Element    xpath://a[contains(@class,'btn btn-danger m-btn m-btn--icon m-btn--icon-only show-delete-modal')]
+    Sleep    1
+    Wait Until Element Is Visible    xpath://button[@class='btn btn-primary']
+    Capture Page Screenshot    modal-delete-button-{index}.png
+    Click Element    xpath://button[@class='btn btn-primary']
+    Capture Page Screenshot    delete-modal-{index}.png
+    Sleep    1
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
+    Click Element    id:m_aside_left_offcanvas_toggle
+    Wait Until Element Is Visible    xpath://span[contains(text(),'Not confirmed')]
+    Click Element    xpath://span[contains(text(),'Not confirmed')]
+    Input Text    xpath://label[contains(text(),'Search:')]//input    ${doctor_radnom_email}
+    Sleep    2
+    Wait Until Element Is Visible    xpath://tr[1]//td[1]
+    Element Text Should Be    xpath://tr[1]//td[1]    ${doctor_radnom_name}
+    Wait Until Element Is Visible    xpath://tr[1]//td[2]
+    Element Text Should Be    xpath://tr[1]//td[2]    ${doctor_radnom_last_name}
+    Wait Until Element Is Visible    xpath://tr[1]//td[4]
+    Element Text Should Be    xpath://tr[1]//td[4]    ${doctor_radnom_email}
+    Capture Page Screenshot    before-delete-doctor-user-{index}.png
+    Wait Until Element Is Visible    xpath://table[1]/tbody[1]/tr[1]/td[6]/a[3]
+    Click Element    xpath://table[1]/tbody[1]/tr[1]/td[6]/a[3]
+    Capture Page Screenshot    delete-doctor-user-{index}.png
+    Sleep    2
+    Click Element    id:footer_action_button2
+    Capture Page Screenshot    after-delete-doctor-user-{index}.png
+    LogoutKW
 
 *** Keywords ***
 Open Testbrowser

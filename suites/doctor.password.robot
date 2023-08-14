@@ -31,7 +31,10 @@ doctor login - failure
     Capture Page Screenshot    doctor-invalid-password-{index}.png
     Click Element    xpath://label[@for='checkbox1']
     Submit Form
+    Wait Until Element Is Visible    xpath://li[contains(text(),'These credentials do not match our records.')]
     Element Text Should Be    xpath://li[contains(text(),'These credentials do not match our records.')]    These credentials do not match our records.
+    ${alert} =    Get Text    xpath://li[contains(text(),'These credentials do not match our records.')]
+    Log To Console    ${alert}
     Capture Page Screenshot    doctor-login-failure-{index}.png
 
 doctor login - success
@@ -63,7 +66,9 @@ doctor change password - fail
     Capture Page Screenshot    doctor-current-password-{index}.png
     Element Text Should Be    xpath://label[contains(text(),'New password')]    New password
     Element Text Should Be    xpath://label[contains(text(),'Confirm password')]    Confirm password
-    Click Button    xpath://div[@id='m_user_profile_tab_7']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
+    Click Element    id:savePasswordBtn
+    ${alert} =    Get Text    xpath://li[contains(text(),'Password field is required.')]
+    Log To Console    ${alert}
     Should Contain    xpath://li[contains(text(),'Password field is required.')]    Password field is required.
     Capture Page Screenshot    doctor-password-field-id-required-{index}.png
     Click Element    xpath://a[contains(text(),'Change password')]
@@ -74,17 +79,23 @@ doctor change password - fail
     Element Text Should Be    xpath://label[contains(text(),'Confirm password')]    Confirm password
     Input Text    id:new2    invalid
     Capture Page Screenshot    doctor-confirm-new-password-{index}.png
-    Click Button    xpath://div[@id='m_user_profile_tab_7']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
+    Click Element    id:savePasswordBtn
+    ${least} =    Get Text    xpath://li[contains(text(),'The password must be at least 8 characters')]
+    Log To Console    ${least}
     Should Contain    xpath://li[contains(text(),'The password must be at least 8 characters.')]    The password must be at least 8 characters.
+    ${not_match} =    Get Text    xpath://li[contains(text(),'The password confirmation does not match')]
+    Log To Console    ${not_match}
     Should Contain    xpath://li[contains(text(),'The password confirmation does not match.')]    The password confirmation does not match.
+    ${invalid} =    Get Text    xpath://li[contains(text(),'The password format is invalid.')]
+    Log To Console    ${invalid}
     Should Contain    xpath://li[contains(text(),'The password format is invalid.')]    The password format is invalid.
     Capture Page Screenshot    change-password-failure-{index}.png
     Click Element    xpath://a[@id='chan_pass']
     Input Text    id:new1    ${ADMINPW}
     Input Text    id:new2    ${ADMINPW}
-    Click Button    xpath://div[@id='m_user_profile_tab_7']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
+    Click Element    id:savePasswordBtn
     Capture Page Screenshot    current-password-field-is-required-{index}.png
-    ${required_password} =     Get Text    xpath://li[contains(text(),'The current password field is required.')]
+    ${required_password} =    Get Text    xpath://li[contains(text(),'The current password field is required.')]
     Log To Console    ${required_password}
     LogoutKW
 
@@ -105,7 +116,7 @@ doctor change password - success
     Element Text Should Be    xpath://label[contains(text(),'Confirm password')]    Confirm password
     Input Text    id:new2    @{DOCTOR}[1]
     Capture Page Screenshot    doctor-confirm-new-password-{index}.png
-    Click Button    xpath://div[@id='m_user_profile_tab_7']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
+    Click Element    id:savePasswordBtn
     Capture Page Screenshot    doctor-changed-password-success{index}.png
     Should Contain    Password changed successfully.    Password changed successfully.
     LogoutKW

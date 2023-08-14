@@ -14,19 +14,21 @@ ${TMP_PATH}       /tmp
 Patient withdraw amount
     [Tags]    withdrawal.requests
     LoginKW
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
-    Sleep    1
+    Wait Until Element Is Visible    xpath://span[contains(text(),'Wallet')]
     Click Element    xpath://span[contains(text(),'Wallet')]
     Patient Wallet page
     ${balance} =    Get Text    xpath://h1[@class='text-color-gray']
     Log To Console    ${balance}
-    Sleep    1
+    Sleep    3
     Click Element    xpath://button[@class='send-modal btn btn-primary']
-    Sleep    2
+    Sleep    3
     Patient Withdraw Request modal
-    Input Text    id:amount    ${withdraw1}
+    ${withdraw} =    Generate Random String    1    [NUMBERS]
+    Input Text    id:amount    1${withdraw}
     Click Element    xpath://span[@id='footer_action_button']
-    Sleep    2
+    Sleep    4
     Scroll Element Into View    xpath://table[1]/tbody[1]/tr[2]/th[1]
     Capture Page Screenshot    withdraw-amount-request-{index}.png
     ${balance} =    Get Text    xpath://h1[@class='text-color-gray']
@@ -52,8 +54,9 @@ Patient withdraw amount
 Bookkeeper approve amount
     [Tags]    withdrawal.requests
     LoginAdminKW
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
-    Sleep    2
+    Wait Until Element Is Visible    xpath://span[contains(text(),'Withdrawal requests')]
     Click Element    xpath://span[contains(text(),'Withdrawal requests')]
     Admin Withdrawal Requests page
     Scroll Element Into View    xpath://table[1]/tbody[1]/tr[2]/th[1]
@@ -81,5 +84,4 @@ Bookkeeper approve amount
     Log To Console    ${status}
     ${status} =    Get Text    xpath://tbody[1]/tr[1]/td[4]
     Log To Console    ${status}
-    Sleep    1
     LogoutKW

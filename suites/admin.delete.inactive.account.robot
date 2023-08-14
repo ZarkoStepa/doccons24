@@ -25,6 +25,9 @@ Delete inactive user - success
     Click Element    xpath://span[contains(text(),'Not confirmed')]
     Sleep    1
     Capture Page Screenshot    before-delete-doctor-user-{index}.png
+    Sleep    1
+    Input Text    xpath://label[contains(text(),'Search:')]//input    ${random_email}
+    Sleep    1
     Click Element    xpath://table[1]/tbody[1]/tr[1]/td[6]/a[3]
     Capture Page Screenshot    delete-modal-{index}.png
     Sleep    1

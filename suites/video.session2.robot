@@ -13,6 +13,7 @@ ${TMP_PATH}       /tmp
 go to session room - doctor
     [Tags]    video
     LoginDocKW
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'My appointments')]
     Click Element    xpath://a[contains(text(),'Confirmed')]

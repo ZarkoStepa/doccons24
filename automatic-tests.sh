@@ -6,8 +6,11 @@ logfile=/home/dev/sites/testlink/logs/doccons24-testlink.log
 exe_dir=/home/dev/sites/testlink/current/
 # development configuration 
 #exe_dir=/home/dev/autotest/robot_dc24/
-list_of_testcases="login password profile-patient manager.update patient.update doctor.update deposit.money doctor.register patient.register admin.manager.register patient.navigate.links doctor.navigate.all.links admin.navigate.all.links manager.navigate.all.links patient.password doctor.password account.manager.password video.session patient.appointment doctor.appointment doctor.appointment.details patient.appointment2 patient.appointment.details doctor.appointment2 doctor.create.recommendation doctor.create.perscription withdrawal.requests admin.create.clicnic create.clinic doctor.choose.clinic admin.add.speciality admin.add.certification admin.add.department translation.fee admin.create.appointments admin.delete.inactive.account account.reports admin.account.manager.patient admin.account.manager.doctor accounting withdrawal.requests account.manager.deposit.amount account.manager.transfer.money account.manager.make.appointment"
-      
+list_of_testcases="login login.page register.page password profile-patient manager.update patient.update doctor.update stripe doctor.register patient.register all.logs admin.manager.register patient.navigate.links doctor.navigate.all.links admin.navigate.all.links manager.navigate.all.links patient.password doctor.password account.manager.password video.session patient.appointment doctor.appointment doctor.appointment.details patient.appointment2 patient.appointment.details doctor.appointment2 doctor.create.recommendation doctor.create.prescription withdrawal.requests admin.create.clinic create.clinic doctor.choose.clinic admin.add.speciality admin.add.certification admin.add.department translation.fee admin.create.appointments admin.delete.inactive.account account.reports admin.account.manager.patient admin.account.manager.doctor accounting account.manager.transfer.money account.manager.make.appointment draw.up ngrok deposit.money account.manager.deposit.amount"
+      # deposit.money
+      # account.manager.deposit.amount
+      # stripe
+     
 environment=test # default.settings
 # FIXME the test suites does not support a swith right now
 if test "$1" == "dev"; then 

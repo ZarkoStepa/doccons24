@@ -1,7 +1,4 @@
 *** Settings ***
-Documentation     Test login and logout with ${EMAIL}
-...               Assert and verify accounting reposrts page
-...               Log to console account_no, date,
 Suite Setup       Open Testbrowser
 Suite Teardown    Close All Browsers
 Library           SeleniumLibrary
@@ -19,16 +16,17 @@ Login
 
 Go to Accounting Reports
     [Tags]    account.reports
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
-    Sleep    3
+    Wait Until Element Is Visible    xpath://a[@class='m-menu__link m-menu__toggle']//span[@class='m-menu__link-text'][contains(text(),'Reports')]
     Capture Page Screenshot    offcanvas-{index}.png
     Click Element    xpath://a[@class='m-menu__link m-menu__toggle']//span[@class='m-menu__link-text'][contains(text(),'Reports')]
-    Sleep    1
+    Wait Until Element Is Visible    xpath://span[contains(text(),'Accounting report')]
     Capture Page Screenshot    reports-{index}.png
     Click Element    xpath://span[contains(text(),'Accounting report')]
     Admin Accounting report page
     #Click Element    id:drawupaccount
-    Sleep    2
+    Wait Until Element Is Visible    xpath://div[1]/table[1]/tbody[1]/tr[1]/td[1]
     Click Element    xpath://div[1]/table[1]/tbody[1]/tr[1]/td[1]
     Sleep    1
     Capture Page Screenshot    report-{index}.png
@@ -44,8 +42,8 @@ Go to Accounting Reports
     Element Text Should Be    xpath://th[contains(text(),'Name')]    Name
     Element Should Be Visible    xpath://th[6]
     Element Text Should Be    xpath://th[contains(text(),'Subtotal')]    Subtotal
-    Element Should Be Visible    xpath://*[@id="mytable"]/thead/tr/th[7]
-    Element Text Should Be    xpath://*[@id="mytable"]/thead/tr/th[7]    Fee
+    Element Should Be Visible    xpath://tbody/tr[2]/td[1]/ul[1]/li[1]/span[1]
+    Element Text Should Be    xpath://tbody/tr[2]/td[1]/ul[1]/li[1]/span[1]    Fee
     Element Should Be Visible    xpath://span[contains(text(),'Total')]
     Element Text Should Be    xpath://span[contains(text(),'Total')]    Total
     Element Should Be Visible    xpath://span[contains(text(),'Currency')]

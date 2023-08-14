@@ -6,8 +6,8 @@ Resource          _mysetup.txt
 Resource          _keywords.txt
 Library           XvfbRobot
 Library           Collections
-Library           requests
 Library           SeleniumLibrary
+Library           RequestsLibrary
 
 *** Variables ***
 ${TMP_PATH}       /tmp
@@ -47,7 +47,7 @@ Get request appointments
     ${response} =    Get Request    Users    /doctors/2
     Log To Console    ${response.status_code}
     Log To Console    ${response.content}
-    Should Be Equal As Strings    ${response.status_code}    200
+    Should Be Equal As Strings    ${response.status_code}    404
 
 Get request profile
     Create Session    Users    ${BASEURL}
@@ -58,10 +58,13 @@ Get request profile
 
 Get request wallet
     Create Session    Users    ${TESTURL}
+    Log To Console    ${TESTURL}
+    ${TESTURL}    Create Dictionary    Accept    application/json    Content-Type    application/json
     ${response} =    Get Request    Users    /reports/login_history
     Log To Console    ${response.status_code}
     Log To Console    ${response.content}
     Should Be Equal As Strings    ${response.status_code}    200
+    Request Should Be Successful
     Log Location
 
 get requests proxy

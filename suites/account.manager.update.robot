@@ -56,7 +56,8 @@ Manager update account info
     Account Info page
     Click Element    xpath://select[@name='role']
     Capture Page Screenshot    click-role-{index}.png
-    Click Element    xpath://option[contains(text(),'Account Manager')]
+    Sleep    1
+    Click Element    xpath://option[contains(text(),'Account manager')]
     Element Should Be Disabled    xpath://input[@id='inputEmail']
     Clear Element Text    name:alt_email
     Element Should Be Enabled    name:fk_security_question
@@ -105,7 +106,8 @@ Manager update payment info
     Input Text    id:inputAON    skAuto2 Do
     Capture Page Screenshot    account-manager-inputAON-{index}.png
     Click Element    id:inputIBAN
-    Input Text    id:inputIBAN    987654321
+    ${IBAN} =    Generate Random String    9    [NUMBERS]
+    Input Text    id:inputIBAN    ${IBAN}
     Capture Page Screenshot    account-manager-IBAN-{index}.png
     Click Element    id:inputBIC
     Input Text    id:inputBIC    DABAIE2D

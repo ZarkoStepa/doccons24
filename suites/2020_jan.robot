@@ -11,7 +11,7 @@ ${TMP_PATH}       /tmp
 
 *** Test Cases ***
 patient books 3 appointments - success
-    [Tags]    test
+    [Tags]
     LoginKW
     #First appointment
     Sleep    3
@@ -79,7 +79,7 @@ patient books 3 appointments - success
     Click Link    /logout
 
 patient see appointment in my appointments
-    [Tags]    test
+    [Tags]
     LoginKW
     Click Element    class:toast-close-button
     Wait Until Element Is Visible    xpath://span[contains(text(),'My appointments')]
@@ -104,7 +104,7 @@ patient see appointment in my appointments
     Click Link    /logout
 
 patient navigate to appointment
-    [Tags]    test
+    [Tags]
     LoginKW
     Click Element    class:toast-close-button
     Sleep    1
@@ -122,7 +122,7 @@ patient navigate to appointment
     Click Link    /logout
 
 patient cancel appointment - canceled appointment has disappeard
-    [Tags]    test
+    [Tags]
     LoginKW
     Sleep    1
     Click Element    class:toast-close-button
@@ -143,7 +143,7 @@ patient cancel appointment - canceled appointment has disappeard
     Click Link    /logout
 
 patient pays one appointment - status of appointment has changed
-    [Tags]    test
+    [Tags]
     LoginKW
     Sleep    1
     Click Element    class:toast-close-button
@@ -157,6 +157,8 @@ patient pays one appointment - status of appointment has changed
     Sleep    3
     Capture Page Screenshot    status-appointment-{index}.png
     Click Link    /logout
+
+setup base
 
 *** Keywords ***
 LoginKW

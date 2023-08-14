@@ -31,10 +31,7 @@ Personal Info
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'Qualifications')]
     Doctor Qualification page
-    #Click Element    xpath://div[@class='col-2']//a[@class='btn btn-primary m-btn m-btn--icon m-btn--icon-only']
-    #Doctor New Hospital modal
-    #Click Button    xpath://button[@class='btn btn-secondary']
-    Sleep    1
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'Working days')]
     Working Days page
@@ -53,21 +50,23 @@ My appointments
 
 Wallet
     [Tags]    doctor.navigate.all.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Capture Page Screenshot    side-bar-{index}.png
     Click Element    xpath://span[contains(text(),'Wallet')]
-    Element Should Be Visible    xpath://h1[contains(text(),'Your Balance')]
+    Doctor Wallet page
     Capture Page Screenshot    your-balance-{index}.png
 
 Reports
     [Tags]    doctor.navigate.all.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Capture Page Screenshot    sidemenu-reports-{index}.png
     Click Element    id:report_a
     Capture Page Screenshot    sidemenu-accoutning-report-{index}.png
     Click Element    xpath://span[contains(text(),'Accounting report')]
+    Doctor Accounting Reports page
     Capture Page Screenshot    doctor-accoutning-report-page-{index}.png
-    Doctor Accoutning Reports page
     Click Element    id:m_aside_left_offcanvas_toggle
     Capture Page Screenshot    sidemenu-reports-{index}.png
     Click Element    xpath://span[contains(text(),'Payment report')]
@@ -80,18 +79,13 @@ Reports
 
 Write
     [Tags]    doctor.navigate.all.links
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://a[contains(@class,'m-menu__link m-menu__toggle')]//span[contains(@class,'m-menu__link-text')][contains(text(),'Write...')]
     Click Element    xpath://span[contains(@class,'m-menu__link-text')][contains(text(),'Recommendation/Prescription')]
     Capture Page Screenshot    recommendation-page-{index}.png
     Wait Until Element Is Visible    xpath://h4[contains(@class,'display-5')]
-    #page
-    Element Text Should Be    xpath://h4[contains(@class,'display-5')]    Recommendation/Prescription
-    Element Should Be Visible    xpath://h4[contains(@class,'display-5')]
-    Wait Until Element Is Visible    id:addrecommendation
-    Element Should Be Enabled    id:addrecommendation
-    Element Should Be Visible    id:addrecommendation
-    Element Text Should Be    id:addrecommendation    Add Recommendation/Prescription
+    Recommendation/Prescription page
     Click Element    id:addrecommendation
     Add Recommendation/Prescription modal dialog
     Click Element    xpath://div[@id='newModal']//button[contains(@class,'close')][contains(text(),'×')]

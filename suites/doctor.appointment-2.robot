@@ -13,56 +13,52 @@ Resource          _mysetup.txt
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-doctor see appointment in my appointments
+Doctor see appointment in my appointments
     [Documentation]    doctor see all 3 appointment in my appointments
     [Tags]    doctor.appointment2
     LoginDocKW
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
+    Wait Until Element Is Visible    xpath://span[contains(text(),'My appointments')]
     Click Element    xpath://span[contains(text(),'My appointments')]
-    Element Should Be Visible    id:docAppoint_wrapper
-    Click Element    xpath://tr[2]//td[2]//a[1]
+    Wait Until Element Is Visible    xpath://tr[2]//td[3]//a[1]
+    Click Element    xpath://tr[2]//td[3]//a[1]
     Capture Page Screenshot    confirmed-appointment-{index}.png
     Element Text Should Be    xpath://label[contains(text(),'Doctor:')]    Doctor:
     Element Text Should Be    xpath://a[contains(text(),'${NEWDOCUSER} ${NEWDOCLASTNAME}')]    ${NEWDOCUSER} ${NEWDOCLASTNAME}
     Element Text Should Be    xpath://label[contains(text(),'Patient:')]    Patient:
     Element Text Should Be    xpath://a[contains(text(),'${NEWUSER} ${NEWLASTNAME}')]    ${NEWUSER} ${NEWLASTNAME}
     Element Text Should Be    xpath://p[contains(text(),'Doctor fee ${INPUTRATE}')]    Doctor fee ${INPUTRATE} € + Arabic Translation fee: ${arabic_fee}.00 €
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
+    Wait Until Element Is Enabled    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
-    Sleep    1
+    Wait Until Element Is Visible    xpath://span[contains(text(),'My appointments')]
+    Wait Until Element Is Enabled    xpath://span[contains(text(),'My appointments')]
     Click Element    xpath://span[contains(text(),'My appointments')]
-    Click Element    xpath://tr[1]//td[2]//a[1]
+    Wait Until Element Is Visible    xpath://tr[2]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
     Capture Page Screenshot    canceled-appointment-{index}.png
     Element Text Should Be    xpath://a[contains(text(),'${NEWDOCUSER} ${NEWDOCLASTNAME}')]    ${NEWDOCUSER} ${NEWDOCLASTNAME}
     Element Text Should Be    xpath://label[contains(text(),'Patient:')]    Patient:
     Element Text Should Be    xpath://a[contains(text(),'${NEWUSER} ${NEWLASTNAME}')]    ${NEWUSER} ${NEWLASTNAME}
+    Element Text Should Be    xpath://p[contains(text(),'Doctor fee ${INPUTRATE}')]    Doctor fee ${INPUTRATE} € + Arabic Translation fee: ${arabic_fee}.00 €
     LogoutKW
 
-doctor navigate to appointment
+Doctor navigate to appointment
     [Tags]    doctor.appointment2
     LoginDocKW
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
+    Wait Until Element Is Visible    xpath://span[contains(text(),'My appointments')]
     Click Element    xpath://span[contains(text(),'My appointments')]
     Capture Page Screenshot    doc-appointment-wrapper-{index}.png
-    Click Element    xpath://tr[3]//td[2]//a[1]
+    Wait Until Element Is Visible    xpath://tr[3]//td[3]//a[1]
+    Click Element    xpath://tr[3]//td[3]//a[1]
     Capture Page Screenshot    confirmed-appointment-{index}.png
     Element Text Should Be    xpath://label[contains(text(),'Doctor:')]    Doctor:
     Element Text Should Be    xpath://a[contains(text(),'${NEWDOCUSER} ${NEWDOCLASTNAME}')]    ${NEWDOCUSER} ${NEWDOCLASTNAME}
     Element Text Should Be    xpath://label[contains(text(),'Patient:')]    Patient:
     Element Text Should Be    xpath://a[contains(text(),'${NEWUSER} ${NEWLASTNAME}')]    ${NEWUSER} ${NEWLASTNAME}
-    Sleep    1
-    Element Text Should Be    xpath://a[contains(text(),'${NEWUSER} ${NEWLASTNAME}')]    ${NEWUSER} ${NEWLASTNAME}
+    Element Text Should Be    xpath://label[contains(text(),'Fees:')]    Fees:
     Element Text Should Be    xpath://p[contains(text(),'Doctor fee ${INPUTRATE}')]    Doctor fee ${INPUTRATE} € + Arabic Translation fee: ${arabic_fee}.00 €
     LogoutKW
-
-*** Keywords ***
-Open Testbrowser
-    ${system}=    Evaluate    platform.system()    platform
-    Run Keyword If    '${system}' == 'Linux'    Start Virtual Display    1920    1080
-    Open Chrome Browser
-
-Open Chrome Browser
-    ${options}    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
-    Call Method    ${options}    add_argument    --no-sandbox
-    ${prefs}    Create Dictionary    download.default_directory=${TMP_PATH}
-    Call Method    ${options}    add_experimental_option    prefs    ${prefs}
-    Create Webdriver    Chrome    chrome_options=${options}

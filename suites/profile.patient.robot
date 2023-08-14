@@ -25,14 +25,14 @@ Change first name
     Input Text    id:inputPhone    +49${phone_number}
     Capture Page Screenshot    Screenshot-profile-patient-{index}.png
     Submit Form
-    #Capture Page Screenshot    Screenshot-profile-patient-{index}.png
+    Capture Page Screenshot    Screenshot-profile-patient-{index}.png
     Wait Until Page Contains    Calvin
 
 Rollback first name
     [Tags]    profile-patient
     Input Text    name:first_name    ${NEWUSER}
     Submit Form
-    # Capture Page Screenshot    Screenshot-profile-patient-rollback-{index}.png
+    Capture Page Screenshot    Screenshot-profile-patient-rollback-{index}.png
     Wait Until Page Contains    ${NEWUSER}
     Logout dc24
 

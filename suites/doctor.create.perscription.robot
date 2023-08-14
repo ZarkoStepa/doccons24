@@ -10,14 +10,14 @@ Resource          _mysetup.txt
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-Doctor add prescription
-    [Tags]    doctor.create.perscription
+Doctor adds prescription
+    [Tags]    doctor.create.prescription
     LoginDocKW
     Click Element    id:m_aside_left_offcanvas_toggle
     Sleep    1
     Click Element    xpath://a[@class='m-menu__link m-menu__toggle']//span[@class='m-menu__link-text'][contains(text(),'Write...')]
     Click Element    xpath://span[@class='m-menu__link-text'][contains(text(),'Recommendation/Prescription')]
-    Doctor recommendation/precription page
+    Doctor recommendation/prescription page
     Click Element    xpath://a[@id='addrecommendation']
     Sleep    1
     Add new recommendation prescription modal
@@ -30,26 +30,24 @@ Doctor add prescription
     Click Element    xpath://span[contains(text(),'Add Recommendation/Prescription')]
     Capture Page Screenshot    prescription-{index}.png
 
-Approve recommendations
-    [Tags]    doctor.create.perscription
+Approve prescription
+    [Tags]    doctor.create.prescription
     Sleep    1
     Click Element    xpath://span[contains(text(),'Approve')]
     Capture Page Screenshot    apporve-reccomendation-{index}.png
-    Sleep    1
     LogoutKW
 
-Patient see recommendation - sucess
-    [Tags]    doctor.create.perscription
+The patient sees prescription- success
+    [Tags]    doctor.create.prescription
     LoginKW
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'Recommendation/Prescription')]
     Patient Recommendation/Prescription page
-    # to do view recomm.
     Sleep    5
     LogoutKW
 
-Delete recommendation - success
-    [Tags]    doctor.create.perscription
+Delete prescription- success
+    [Tags]    doctor.create.prescription
     LoginDocKW
     Click Element    id:m_aside_left_offcanvas_toggle
     Sleep    1

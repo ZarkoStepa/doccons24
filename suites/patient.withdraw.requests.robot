@@ -14,23 +14,20 @@ Library           SeleniumLibrary
 Library           XvfbRobot
 Resource          _mysetup.txt
 Resource          _keywords.txt
+Library           String
 
 *** Variables ***
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-Login
+Log in
     [Tags]    withdrawal.requests
     LoginKW
 
 Go to wallet
     [Tags]    withdrawal.requests
-    #Wait Until Element Is Visible    xpath://div[@class='toast-message']
     Capture Page Screenshot    before-toast-message-{index}.png
-    #Click Element    xpath://button[@id='close1']//span[contains(text(),'×')]
-    #Click Element    xpath://button[@id='close2']//span[contains(text(),'×')]
-    #Click Element    xpath://div[@class='toast-message']
-    Sleep    2
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Link    /wallet
     Patient Wallet page
@@ -44,49 +41,41 @@ Patient make 3 withdraw request
     [Tags]    withdrawal.requests
     Click Button    xpath://button[@class='send-modal btn btn-primary']
     Patient Withdraw Request modal
-    #Click Element    xpath://button[@id='close1']//span[contains(text(),'×')]
-    #Click Element    xpath://button[@id='close2']//span[contains(text(),'×')]
     Wait Until Element Is Visible    id:amount
-    Input Text    id:amount    ${withdraw1}
+    ${withdraw} =    Generate Random String    1    [NUMBERS]
+    Input Text    id:amount    1${withdraw}
     Capture Page Screenshot    first-request-{index}.png
     Click Button    xpath://button[@class='btn actionBtn btn-primary runAjaxSend']
     Wait Until Element Is Visible    xpath://button[@class='send-modal btn btn-primary']
-    Sleep    3
+    Sleep    5
     Click Button    xpath://button[@class='send-modal btn btn-primary']
     Patient Withdraw Request modal
-    #Click Element    xpath://button[@id='close1']//span[contains(text(),'×')]
-    #Click Element    xpath://button[@id='close2']//span[contains(text(),'×')]
     Wait Until Element Is Visible    id:amount
-    Input Text    id:amount    ${withdraw2}
+    Input Text    id:amount    1${withdraw}
     Capture Page Screenshot    second-request-{index}.png
     Click Button    //button[@class='btn actionBtn btn-primary runAjaxSend']
     Wait Until Element Is Visible    //button[@class='send-modal btn btn-primary']
-    Sleep    3
+    Sleep    5
     Click Button    //button[@class='send-modal btn btn-primary']
     Patient Withdraw Request modal
-    #Click Element    xpath://button[@id='close1']//span[contains(text(),'×')]
-    #Click Element    xpath://button[@id='close2']//span[contains(text(),'×')]
     Wait Until Element Is Visible    id:amount
-    Input Text    id:amount    ${withdraw3}
+    Input Text    id:amount    1${withdraw}
     Capture Page Screenshot    third-request-{index}.png
     Click Button    //button[@class='btn actionBtn btn-primary runAjaxSend']
-    Sleep    3
+    Sleep    5
 
 Patient Cancel Withdraw
     [Tags]    withdrawal.requests
-    #Click Element    xpath://button[@id='close1']//span[contains(text(),'×')]
-    #Click Element    xpath://button[@id='close2']//span[contains(text(),'×')]
     Scroll Element Into View    xpath://th[contains(text(),'Action')]
+    Capture Page Screenshot    action-before-{index}.png
     Click Element    xpath://th[contains(text(),'Action')]
-    Sleep    5
+    Sleep    1
+    Capture Page Screenshot    action-midle-{index}.png
     Click Element    xpath://th[contains(text(),'Action')]
+    Capture Page Screenshot    action-after-{index}.png
     Scroll Element Into View    xpath://table[@id='paymentTable']/tbody/tr[5]/td[4]
-    Sleep    2
+    Wait Until Element Is Visible    xpath://table[@id='paymentTable']/tbody/tr[3]/td[4]/form/button
     Click Element    xpath://table[@id='paymentTable']/tbody/tr[3]/td[4]/form/button
-    Sleep    2
-    #Click Element    xpath://button[@id='close1']//span[contains(text(),'×')]
-    #Click Element    xpath://button[@id='close2']//span[contains(text(),'×')]
-    Sleep    2
     LogoutKW
 
 Admin go to wallet
@@ -103,6 +92,9 @@ Admin go to wallet
     Capture Page Screenshot    capture-before-approve-withdraw-{index}.png
     Click Element    xpath://table/tbody[1]/tr[1]/td[5]/form[1]/button[1]
     Capture Page Screenshot    capture-after-approve-withdraw-{index}.png
+
+Log out
+    [Tags]    withdrawal.requests
     LogoutKW
 
 *** Keywords ***

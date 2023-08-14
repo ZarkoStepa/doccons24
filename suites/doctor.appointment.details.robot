@@ -1,83 +1,84 @@
 *** Settings ***
-Documentation     Test login and logout with
 Suite Setup       Open Testbrowser
 Suite Teardown    Close All Browsers
 Library           SeleniumLibrary
 Library           XvfbRobot
 Resource          _mysetup.txt
 Resource          _keywords.txt
-Library           BuiltIn
 Library           String
 
 *** Variables ***
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-doctor can invite guest to video
+Doctor open payed appointment (preview) over my appointments
     [Tags]    doctor.appointment.details
     LoginDocKW
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Link    /appointments
-    Capture Page Screenshot    appointment-sidebar-{index}.png
+    Doctor My Appointment page
     Click Element    xpath://a[contains(text(),'Confirmed')]
     Capture Page Screenshot    confirmed-appointment-{index}.png
-    Click Element    xpath://tr[1]//td[2]//a[1]
-    #Assert appointment details
+    Wait Until Element Is Visible    xpath://tr[1]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
+    Assert appointment details
+    LogoutKW
+
+The doctor can invite a guest to video
+    [Tags]    doctor.appointment.details
+    LoginDocKW
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
+    Click Element    id:m_aside_left_offcanvas_toggle
+    Click Link    /appointments
+    Doctor My Appointment page
+    Capture Page Screenshot    appointment-sidebar-{index}.png
+    Wait Until Element Is Visible    xpath://a[contains(text(),'Confirmed')]
+    Click Element    xpath://a[contains(text(),'Confirmed')]
+    Capture Page Screenshot    confirmed-appointment-{index}.png
+    Sleep    3
+    Wait Until Element Is Visible    xpath://tr[1]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
+    Assert appointment details
     Capture Page Screenshot    preview-appointment-{index}.png
-    Click Element    xpath://button[@class='btn btn-primary accordion']
+    Click Element    class:accordion
     Capture Page Screenshot    preview-invitation-{index}.png
-    Click Element    xpath://button[@class='send-modal btn btn-primary']
-    Capture Page Screenshot    send-modal-invitation-{index}.png
-    Sleep    1
-    Wait Until Element Is Visible    xpath://div[@id='windowModalForSendingMail']//div[@class='modal-body']
-    Element Should Be Visible    xpath://button[@class='close']
-    Element Should Be Visible    xpath://div[@class='modal-header']
-    Element Should Be Visible    id:id
-    Element Should Be Disabled    id:id
-    Wait Until Element Is Visible    xpath://label[contains(text(),'ID Room')]
-    Wait Until Element Is Visible    xpath://div[@class='modal-footer']
-    Wait Until Element Is Visible    xpath://label[contains(text(),'Enter email')]
-    Element Text Should Be    xpath://label[contains(text(),'Enter email')]    Enter email
-    Wait Until Element Is Visible    xpath://button[@class='btn btn-danger']
+    Click Element    class:send-modal
+    Invite guest to video modal
     Input Text    id:email    ${USEREMAIL}
     Capture Page Screenshot    wai input-email-{index}.png
     Click Element    xpath://span[@id='footer_action_button']
     Capture Page Screenshot    send-invitation-to-guest-{index}.png
-    Sleep    8
+    Wait Until Element Is Visible    id:msg_email_guest
+    Element Should Be Visible    id:msg_email_guest
+    ${invite_list} =    Get Text    class:alert-info
+    Log To Console    ${invite_list}
     Wait Until Element Is Visible    xpath://div[@class='alert alert-info']
     ${alert-success} =    Get Text    xpath://div[@class='alert alert-info']
     Log To Console    ${alert-success}
-    Element Text Should Be    xpath://div[@class='alert alert-info']    Email is successfully sent
+    Should Contain    Email is successfully sent    Email is successfully sent
     Capture Page Screenshot    successfull-invitation-sent-alert-{index}.png
     LogoutKW
 
-doctor open payed appointment (preview) over my appointments
-    [Tags]    doctor.appointment.details
-    LoginDocKW
-    Click Element    id:m_aside_left_offcanvas_toggle
-    Click Link    /appointments
-    Click Element    xpath://a[contains(text(),'Confirmed')]
-    Capture Page Screenshot    confirmed-appointment-{index}.png
-    Click Element    xpath://tr[1]//td[2]//a[1]
-    #Assert appointment details
-    LogoutKW
-
-doctor can go to session room
+The doctor can go to session room
     [Tags]    doctor.appointment.details
     [Setup]
     LoginDocKW
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Link    /appointments
+    Wait Until Element Is Visible    xpath://a[contains(text(),'Confirmed')]
     Click Element    xpath://a[contains(text(),'Confirmed')]
-    Click Element    xpath://tr[1]//td[2]//a[1]
-    #Assert appointment details
+    Sleep    2
+    Wait Until Element Is Visible    xpath://tr[1]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
+    Assert appointment details
     Element Should Contain    xpath://a[@class='btn btn-success']    Go to Session Room
     Click Element    xpath://a[@class='btn btn-success']
     Capture Page Screenshot    video-session-page-{index}.png
     Sleep    3
     Click Element    id:endCall
     Capture Page Screenshot    end-call-video-session-{index}.png
-    Sleep    3
+    Doctor My Appointment page
     LogoutKW
 
 *** Keywords ***

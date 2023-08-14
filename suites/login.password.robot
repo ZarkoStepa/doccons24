@@ -23,9 +23,9 @@ Password wrong: short4 de
     [Tags]    password    login
     GoTo    ${TESTURL}
     Click Link    ${TESTURL}/lang/de
-    ${RANDOM} =    Generate Random String    4    [NUMBERS]
+    ${RANDOM} =    Generate Random String    6    [NUMBERS]
     Input Text    name:email    ${USEREMAIL}
-    Input Text    name:password    short8
+    Input Text    name:password    ${RANDOM}
     Submit Form
     Wait Until Page Contains    stimmen nicht mit
 
@@ -39,12 +39,12 @@ Password wrong: short4 en
     [Tags]    password    login
     GoTo    ${TESTURL}
     Click Link    ${TESTURL}/lang/en
-    ${RANDOM} =    Generate Random String    4    [NUMBERS]
+    ${RANDOM} =    Generate Random String    6    [NUMBERS]
     Input Text    name:email    ${USEREMAIL}
-    Input Text    name:password    short8
-    # Button to register needs an id
-    #Capture Page Screenshot    Screenshot-password-noNumber-{index}.png
+    Input Text    name:password    ${RANDOM}
+    Capture Page Screenshot    Screenshot-password-noNumber-{index}.png
     Submit Form
+    Capture Page Screenshot    do-not-match-{index}.png
     Wait Until Page Contains    do not match
 
 Choose arabic
@@ -57,11 +57,10 @@ Password wrong: short4 ar
     [Tags]    password    login
     GoTo    ${TESTURL}
     Click Link    ${TESTURL}/lang/ar
-    ${RANDOM} =    Generate Random String    4    [NUMBERS]
+    ${RANDOM} =    Generate Random String    6    [NUMBERS]
     Input Text    name:email    ${USEREMAIL}
-    Input Text    name:password    short8
-    # Button to register needs an id
-    #Capture Page Screenshot    Screenshot-password-noNumber-{index}.png
+    Input Text    name:password    ${RANDOM}
+    Capture Page Screenshot    Screenshot-password-noNumber-{index}.png
     Submit Form
     Wait Until Page Contains    مع سجلاتنا
 

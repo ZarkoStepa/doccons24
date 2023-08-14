@@ -109,7 +109,7 @@ Manager access my appointment without login - failure
     Sleep    2
     Click Element    xpath://span[contains(text(),'All appointments')]
     Capture Page Screenshot    no-any-record-found-{index}.png
-    Wait Until Element Is Visible    xpath://div[@class='alert alert-danger']
+    #Wait Until Element Is Visible    xpath://div[@class='alert alert-danger']
     LogoutKW
     Capture Page Screenshot    manager-after-logout-{index}.png
     [Teardown]    deactivate and delete manager

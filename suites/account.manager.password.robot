@@ -25,8 +25,8 @@ Account manager login - failure
     Submit Form
     Element Text Should Be    xpath://li[contains(text(),'These credentials do not match our records.')]    These credentials do not match our records.
     Capture Page Screenshot    account-manager-login-failure-{index}.png
-    ${alert-success} =    Get Text    xpath://li[contains(text(),'These credentials do not match our records.')]
-    Log To Console    ${alert-success}
+    ${alert} =    Get Text    xpath://li[contains(text(),'These credentials do not match our records.')]
+    Log To Console    ${alert}
 
 Account manager login - success
     [Tags]    account.manager.password
@@ -40,17 +40,16 @@ Account manager login - success
     Click Element    xpath://label[@for='checkbox1']
     Submit Form
     Log    Account manager has successfully login
-    Should Contain    Doctor    Doctor
+    Should Contain    Doctors    Doctors
     LogoutKW
     Capture Page Screenshot    account-manager-login-success-{index}.png
 
 Account manager change password - fail
-    [Documentation]    assert and verify all messages when fail
     [Tags]    account.manager.password
     LoginManagerKW
     Click Element    id:m_aside_left_offcanvas_toggle
-    Click Element    xpath://span[contains(text(),'Profile')]
     Capture Page Screenshot    after-click-profile-{index}.png
+    Click Link    /profile
     Click Element    xpath://a[contains(text(),'Change password')]
     Capture Page Screenshot    account-manager-goto-change-password-{index}.png
     Element Text Should Be    xpath://label[contains(text(),'Current password')]    Current password
@@ -58,10 +57,11 @@ Account manager change password - fail
     Capture Page Screenshot    account-manager-current-password-{index}.png
     Element Text Should Be    xpath://label[contains(text(),'New password')]    New password
     Element Text Should Be    xpath://label[contains(text(),'Confirm password')]    Confirm password
-    Click Button    xpath://div[@id='m_user_profile_tab_7']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
+    Click Element    id:savePasswordBtn
+    Should Contain    xpath://li[contains(text(),'Password field is required.')]    Password field is required.
+    Wait Until Element Is Visible    xpath://li[contains(text(),'Password field is required.')]
     ${alert} =    Get Text    xpath://li[contains(text(),'Password field is required.')]
     Log To Console    ${alert}
-    Should Contain    xpath://li[contains(text(),'Password field is required.')]    Password field is required.
     Capture Page Screenshot    account-manager-password-field-id-required-{index}.png
     Click Element    xpath://a[contains(text(),'Change password')]
     Capture Page Screenshot    after-click-change-password-{index}.png
@@ -73,22 +73,31 @@ Account manager change password - fail
     Element Text Should Be    xpath://label[contains(text(),'Confirm password')]    Confirm password
     Input Text    id:new2    invalid
     Capture Page Screenshot    account-manager-confirm-new-password-{index}.png
-    Click Button    xpath://div[@id='m_user_profile_tab_7']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
+    Click Element    id:savePasswordBtn
     Should Contain    xpath://li[contains(text(),'The password must be at least 8 characters.')]    The password must be at least 8 characters.
-    ${alert} =    Get Text    xpath://li[contains(text(),'The password must be at least 8 characters.')]
-    Log To Console    ${alert}
+    ${least} =    Get Text    xpath://li[contains(text(),'The password must be at least 8 characters.')]
+    Log To Console    ${least}
     Should Contain    xpath://li[contains(text(),'The password confirmation does not match.')]    The password confirmation does not match.
-    ${alert} =    Get Text    xpath://li[contains(text(),'The password confirmation does not match.')]
-    Log To Console    ${alert}
+    ${not_match} =    Get Text    xpath://li[contains(text(),'The password confirmation does not match.')]
+    Log To Console    ${not_match}
     Should Contain    xpath://li[contains(text(),'The password format is invalid.')]    The password format is invalid.
-    ${alert-success} =    Get Text    xpath://li[contains(text(),'The password format is invalid.')]
-    Log To Console    ${alert-success}
+    ${invalid} =    Get Text    xpath://li[contains(text(),'The password format is invalid.')]
+    Log To Console    ${invalid}
     Capture Page Screenshot    change-password-failure-{index}.png
+    Click Element    id:chan_pass
+    Input Text    id:new1    ${ADMINPW}
+    Input Text    id:new2    ${ADMINPW}
+    Click Element    id:savePasswordBtn
+    #Click Button    xpath://div[@id='m_user_profile_tab_7']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
+    Capture Page Screenshot    current-password-field-is-required-{index}.png
+    ${required_password} =    Get Text    xpath://li[contains(text(),'The current password field is required.')]
+    Log To Console    ${required_password}
     LogoutKW
 
 Account manager change password - success
     [Tags]    account.manager.password
     LoginManagerKW
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
     Click Element    xpath://span[contains(text(),'Profile')]
     Capture Page Screenshot    after-click-profile-{index}.png
@@ -103,7 +112,7 @@ Account manager change password - success
     Element Text Should Be    xpath://label[contains(text(),'Confirm password')]    Confirm password
     Input Text    id:new2    @{MANAGER}[1]
     Capture Page Screenshot    account-manager-confirm-new-password-{index}.png
-    Click Button    xpath://div[@id='m_user_profile_tab_7']//button[@class='btn btn-primary m-btn m-btn--custom'][contains(text(),'Save changes')]
+    Click Element    id:savePasswordBtn
     Should Contain    Password changed successfully.    Password changed successfully.
     Capture Page Screenshot    account-manager-changed-password-success{index}.png
     ${alert-success} =    Get Text    class:alert-success

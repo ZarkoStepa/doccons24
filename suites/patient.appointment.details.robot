@@ -15,55 +15,58 @@ Resource          _keywords.txt
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-user open payed appointment (preview) over my appointments
+User open paid appointment (preview) over my appointments
     [Tags]    patient.appointment.details
     LoginKW
-    #Wait Until Element Is Visible    xpath://div[@class='toast-message']
     Capture Page Screenshot    toast-message-{index}.png
-    #Click Element    xpath://div[@class='toast-message']
-    Sleep    1
+    Wait Until Element Is Visible    id:m_aside_left_offcanvas_toggle
     Click Element    id:m_aside_left_offcanvas_toggle
-    Sleep    1
+    Wait Until Element Is Visible    xpath://span[contains(text(),'My appointments')]
     Click Element    xpath://span[contains(text(),'My appointments')]
+    Wait Until Element Is Visible    xpath://a[contains(text(),'Confirmed')]
     Element Should Be Visible    xpath://a[contains(text(),'Confirmed')]
     Click Element    xpath://a[contains(text(),'Confirmed')]
     Element Should Be Visible    id:appointmentTable_wrapper
     Capture Page Screenshot    appointment-table-wrapper-{index}.png
 
-user can go to session room
+User can go to the session room
     [Tags]    patient.appointment.details
     [Setup]
     Element Should Be Visible    id:appointmentTable_wrapper
-    Click Element    xpath://tr[1]//td[2]//a[1]
-    #Assert appointment details
+    Wait Until Element Is Visible    xpath://tr[1]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
+    Assert Appointment with translation details
     Capture Page Screenshot    appointment-details{index}.png
 
-user can close session room and is back on my appointments
+User can close session room and is back on my appointments
     [Tags]    patient.appointment.details
-    #Wait Until Element Is Visible    xpath://a[@class='btn btn-success']
     Capture Page Screenshot    goto-video-session-room-{index}.png
     Click Element    xpath://a[@class='btn btn-success']
-    #Wait Until Element Is Visible    xpath://div[@class='media-box']//video
-    Sleep    5
+    #remove sleep
+    Sleep    2
     Capture Page Screenshot    before-click-endcall-{index}.png
+    Wait Until Element Is Visible    id:endCall
     Click Element    id:endCall
-    Sleep    3
+    Wait Until Element Is Not Visible    class:media-box
 
-guest can access session room
+Guest can access session room
     [Tags]    patient.appointment.details
-    Element Should Be Visible    xpath://a[contains(text(),'Confirmed')]
-    Click Element    xpath://a[contains(text(),'Confirmed')]
+    Sleep    3
+    Wait Until Element Is Visible    id:2
+    #Element Should Be Visible    xpath://a[contains(text(),'Confirmed')]
+    Click Element    id:2
     Element Should Be Visible    id:appointmentTable_wrapper
-    Click Element    xpath://tr[1]//td[2]//a[1]
-    Assert appointment details
+    Wait Until Element Is Visible    xpath://tr[1]//td[3]//a[1]
+    Click Element    xpath://tr[1]//td[3]//a[1]
+    Assert Appointment with translation details
     Capture Page Screenshot    appointments-details-{index}.png
     Wait Until Element Is Visible    xpath://a[@class='btn btn-success']
     Click Element    xpath://a[@class='btn btn-success']
-    #Wait Until Element Is Visible    xpath://div[@class='media-box']//video
     Capture Page Screenshot    video-session-room-{index}.png
-    Sleep    3
+    #remove sleep
+    Sleep    2
     Click Element    id:endCall
-    Sleep    3
+    Wait Until Element Is Not Visible    class:media-box
     LogoutKW
 
 *** Keywords ***

@@ -19,7 +19,7 @@ Library           String
 ${TMP_PATH}       /tmp
 
 *** Test Cases ***
-doctor update all required fields for personal info - success
+Doctor update personal info
     [Documentation]    Doctor personal
     [Tags]    doctor.update
     LoginDocKW
@@ -62,7 +62,7 @@ doctor update all required fields for personal info - success
     Log To Console    ${alert-success}
     LogoutKW
 
-doctor update account info -success
+Doctor update account info
     [Tags]    doctor.update
     LoginDocKW
     Click Element    xpath://a[contains(text(),'General')]
@@ -75,7 +75,7 @@ doctor update account info -success
     Log To Console    ${alert-success}
     LogoutKW
 
-doctor update all required fields for location - success
+Doctor update location info
     [Documentation]    Doctor location
     [Tags]    doctor.update
     LoginDocKW
@@ -118,8 +118,7 @@ doctor update all required fields for location - success
     Log To Console    ${alert-success}
     LogoutKW
 
-doctor update all payment information
-    [Documentation]    Doctor Payment Info
+Doctor update payment information
     [Tags]    doctor.update
     LoginDocKW
     Click Element    xpath://a[contains(text(),'Payment info')]
@@ -147,7 +146,7 @@ doctor update all payment information
     Log To Console    ${alert-success}
     LogoutKW
 
-doctor add for every working day a timeslot
+Doctor add for every working day a timeslot
     [Tags]    doctor.update
     [Setup]    Setup doctor days
     LoginDocKW
@@ -234,7 +233,7 @@ doctor add for every working day a timeslot
     LogoutKW
     [Teardown]
 
-doctor update specialty, language
+Doctor update specialty, language
     [Tags]    doctor.update
     [Setup]    Setup Qualification - language
     LoginDocKW
@@ -252,8 +251,8 @@ doctor update specialty, language
     Capture Page Screenshot    click-qualification-{index}.png
     Input Text    name:qualification    ${EDUCATION}
     Capture Page Screenshot    input-qualification-{index}.png
-    Element Text Should Be    xpath://label[contains(text(),'Specialities')]    Specialities
-    Click Element    xpath://span[contains(text(),'Choose specialities')]
+    Element Text Should Be    xpath://label[contains(text(),'Specialties')]    Specialties
+    Click Element    xpath://span[contains(text(),'Choose specialties')]
     Capture Page Screenshot    click-choose-specialties-dropdown-{index}.png
     Click Element    xpath://span[contains(text(),'Allergist')]
     Capture Page Screenshot    doctor-specialities-{index}.png
